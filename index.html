@@ -1,0 +1,206 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Calculator</title>
+        <link href="./rescources/css/reset.css" type="text/css" rel="stylesheet" />
+        <link href="./rescources/css/style.css" type="text/css" rel="stylesheet" />
+        <meta name="veiwport" content="width=device-width, intitial-scale=1.0"> 
+    </head>
+    <body>
+        <h1>the biggest brain calculations</h1>
+        <div id="calculator">
+            <div id="screen"></div>
+            <div id="controls">
+                <div class="other"></div>
+                <div class="other"></div>
+            </div>
+            <div id="numbers">
+                <div class="number">1</div>
+                <div class="number">2</div>
+                <div class="number">3</div>
+                <div class="number">4</div>
+                <div class="number">5</div>
+                <div class="number">6</div>
+                <div class="number">7</div>
+                <div class="number">8</div>
+                <div class="number">9</div>
+                <div class="number">0</div>
+                <div class="operator" id="equals">=</div>
+                <div class="operator" id="clear">C</div>
+            </div>
+            <div id="operators">
+                <div class="operator" id="plus">+</div>
+                <div class="operator" id="minus">-</div>
+                <div class="operator" id="times">*</div>
+                <div class="operator" id="devided">/</div>
+            </div>
+        </div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+        <script type="text/javascript">
+
+var $screen = $("#screen");
+var $number = $(".number");
+
+var sign
+
+var num1 = null
+var num2 = null
+
+var currentNumber = 1;
+
+var answer
+
+var click = 0;
+
+$number.on('click', function()
+{
+    click++;
+    if (click > 8)
+    {
+        return;
+    }
+
+    var numberPressed = $(this).html();
+    $screen.append(numberPressed);
+    if (currentNumber == 1)
+    {
+        if (num1 != null)
+        {
+            num1 = num1 + numberPressed
+        }
+        else
+        {
+            num1 = numberPressed
+        }
+    }
+    else if (currentNumber == 2)
+    {
+        if (num2 != null)
+        {
+            num2 = num2 + numberPressed
+        }
+        else
+        {
+            num2 = numberPressed
+        }
+    }
+}
+);
+
+function More ()
+{
+    if (click > 8)
+    {
+        click = click -5
+    }
+    if (currentNumber == 2)
+    {
+        FindAnswer ();
+        $screen.empty();
+        $screen.append(num1);
+    }
+    currentNumber = 2;
+}
+
+document.getElementById("plus").onclick = function WritePlus ()
+{
+    if (num1 != null)
+    {
+        More();
+    $screen.append("+");
+    sign = "+"
+    }
+}
+
+document.getElementById("minus").onclick = function WritePlus ()
+{
+    if (num1 != null)
+    {
+    More();
+    $screen.append("-");
+    sign = "-"
+    }
+}
+
+document.getElementById("times").onclick = function WritePlus ()
+{
+    if (num1 != null)
+    {
+    More();
+    $screen.append("*");
+    sign = "*"
+    }
+}
+
+document.getElementById("devided").onclick = function WritePlus ()
+{
+    if (num1 != null)
+    {
+    More();
+    $screen.append("/");
+    sign = "/"
+    }
+}
+
+document.getElementById("equals").onclick = function WriteEquals ()
+{
+    if (num1 != null)
+    {
+    $screen.append("=");
+    FindAnswer ();
+    if (click > 8)
+    {
+        $screen.empty();
+        var answerLength = answer.toString ();
+        click = answerLength.length;
+        console.log("click");
+    }
+}
+}
+
+document.getElementById("clear").onclick = function Clear ()
+{
+    $screen.empty();
+    Reset();
+}
+
+function Reset ()
+{
+    num1 = null
+    num2 = null
+    currentNumber = 1
+    click = 0;
+}
+
+function FindAnswer ()
+{
+    num1 = parseInt(num1);
+    num2 = parseInt(num2);
+
+    console.log(num1, sign, num2)
+
+    if (sign == "+")
+    {
+        answer = num1 + num2
+    }
+    if (sign == "-")
+    {
+        answer = num1 - num2
+    }
+    if (sign == "*")
+    {
+        answer = num1 * num2
+    }
+    if (sign == "/")
+    {
+        answer = num1 / num2
+    }
+    num1 = answer;
+    num2 = null;
+    currentNumber = 1;
+}
+        </script>
+    </body>
+</html>
